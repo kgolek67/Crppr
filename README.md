@@ -21,7 +21,7 @@ You need a GitHub account and a browser. **A Mac, Xcode installation, Apple Deve
 2. Create an empty GitHub repository.
 3. Use **Add file → Upload files** to upload the extracted project's contents to the repository root. Include the hidden `.github` folder. The root must contain `Crppr.xcodeproj`, `Crppr/`, `scripts/`, and `.github/workflows/`; avoid adding an extra enclosing project folder.
 4. Commit the files. Open the repository's **Actions** tab and enable workflows if GitHub asks.
-5. Open **Build unsigned iPhone IPA** and choose **Run workflow**. Keep the default macOS runner, or choose **macos-26-intel** if the default runner queue is slow. A push to `main` or `master` also starts a build automatically.
+5. Open **Build unsigned iPhone IPA** and choose **Run workflow**. The default runner is **macos-26-intel**; **macos-latest** is also available if you need to try a different runner queue. A push to `main` or `master` also starts a build automatically.
 6. Open the completed successful run and download **Crppr-unsigned-ipa** from **Artifacts**. GitHub wraps the download in a ZIP file; extract it to get `Crppr-unsigned.ipa`.
 
 If your uploader omits hidden folders, use GitHub's **Add file → Create new file** to create `.github/workflows/unsigned-ipa.yml` and paste the matching workflow from this project. The workflow must be committed before it appears in Actions. GitHub Actions usage limits depend on your account and repository visibility.

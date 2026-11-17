@@ -7,10 +7,10 @@ on:
         description: macOS runner
         type: choice
         required: true
-        default: macos-latest
+        default: macos-26-intel
         options:
-          - macos-latest
           - macos-26-intel
+          - macos-latest
   push:
     branches: [main, master]
   pull_request:
@@ -20,13 +20,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: unsigned-ipa-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ inputs.runner || 'macos-latest' }}
+  group: unsigned-ipa-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ inputs.runner || 'macos-26-intel' }}
   cancel-in-progress: true
 
 jobs:
   build:
     name: Compile and package Crppr
-    runs-on: ${{ inputs.runner || 'macos-latest' }}
+    runs-on: ${{ inputs.runner || 'macos-26-intel' }}
     timeout-minutes: 25
     steps:
       - name: Check out source
