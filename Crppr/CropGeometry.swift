@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 
 /// Width and height are stored independently in tenths so neither component
