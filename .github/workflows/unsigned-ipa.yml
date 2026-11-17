@@ -2,6 +2,15 @@ name: Build unsigned iPhone IPA
 
 on:
   workflow_dispatch:
+    inputs:
+      runner:
+        description: macOS runner
+        type: choice
+        required: true
+        default: macos-latest
+        options:
+          - macos-latest
+          - macos-26-intel
   push:
     branches: [main, master]
   pull_request:
@@ -11,13 +20,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: unsigned-ipa-${{ github.workflow }}-${{ github.ref }}
+  group: unsigned-ipa-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ inputs.runner || 'macos-latest' }}
   cancel-in-progress: true
 
 jobs:
   build:
     name: Compile and package Crppr
-    runs-on: macos-latest
+    runs-on: ${{ inputs.runner || 'macos-latest' }}
     timeout-minutes: 25
     steps:
       - name: Check out source
