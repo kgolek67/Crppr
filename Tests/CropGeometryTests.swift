@@ -162,7 +162,7 @@ struct CropGeometryTests {
         expect(CropGeometry.maxCropSize(imageSize: CGSize(width: 1, height: 1), ratio: .square)
                == CGSize(width: 1, height: 1), "A one-pixel square is a valid exact crop")
         for size in [CGSize.zero, CGSize(width: -10, height: 20),
-                     CGSize(width: .infinity, height: 20), CGSize(width: 20, height: .nan)] {
+                     CGSize(width: CGFloat.infinity, height: 20), CGSize(width: 20, height: CGFloat.nan)] {
             expect(CropGeometry.maxCropSize(imageSize: size, ratio: portrait) == nil,
                    "Invalid source size must fail safely")
         }
