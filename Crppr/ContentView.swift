@@ -164,8 +164,9 @@ struct ContentView: View {
     }
 
     private var photoPicker: some View {
-        PhotosPicker(selection: $selectedItem, matching: .images, preferredItemEncoding: .current) {
-            Label(photo == nil ? "Choose Photo" : "Change Photo", systemImage: "photo.on.rectangle")
+        let title = photo == nil ? "Choose Photo" : "Change Photo"
+        return PhotosPicker(selection: $selectedItem, matching: .images, preferredItemEncoding: .current) {
+            Label(title, systemImage: "photo.on.rectangle")
         }
         .disabled(isBusy)
     }
