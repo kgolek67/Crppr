@@ -1,0 +1,49 @@
+name: Build unsigned iPhone IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unsigned-ipa-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Compile and package Crppr
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Test exact-ratio crop geometry
+        run: |
+          swiftc Crppr/CropGeometry.swift Tests/CropGeometryTests.swift -o "$RUNNER_TEMP/crppr-geometry-tests"
+          "$RUNNER_TEMP/crppr-geometry-tests"
+
+      - name: Build physical-iPhone app and package unsigned IPA
+        run: bash scripts/build-unsigned-ipa.sh
+
+      - name: Upload downloadable IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Crppr-unsigned-ipa
+          path: dist/Crppr-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload build diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Crppr-build-diagnostics
+          path: build/*.log
+          if-no-files-found: ignore
+          retention-days: 7
