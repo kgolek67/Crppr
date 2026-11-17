@@ -25,7 +25,7 @@ xcodebuild \
 
 APP_PATH="$BUILD_DIR/DerivedData/Build/Products/Release-iphoneos/Crppr.app"
 test -d "$APP_PATH"
-xcrun lipo -verify_arch arm64 "$APP_PATH/Crppr"
+xcrun lipo "$APP_PATH/Crppr" -verify_arch arm64
 if codesign -d "$APP_PATH" > "$BUILD_DIR/signature-check.log" 2>&1; then
   echo 'Expected an unsigned app, but codesign found a signature.' >&2
   exit 1
